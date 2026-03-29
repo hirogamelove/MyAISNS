@@ -1,0 +1,13 @@
+{
+  "name": "myaisns-stripe-api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Vercel serverless: Stripe Checkout + verify for MyAISNS",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "stripe": "^17.7.0"
+  }
+}

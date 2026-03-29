@@ -1,0 +1,26 @@
+MyAISNS 用 Stripe API（Vercel 専用サブフォルダ）
+==============================================
+
+■ あなたがやること（5 分程度）
+
+1) Vercel に「新規プロジェクト」を作る。
+   - GitHub などと連携する場合: リポジトリを選び、
+     Root Directory を「vercel-stripe-api」に設定する。
+   - またはこのフォルダだけ zip して Vercel にドラッグでも可。
+
+2) プロジェクトの Environment Variables に追加:
+   STRIPE_SECRET_KEY = sk_test_...（Stripe ダッシュボード → 開発者 → API キー）
+
+3) Deploy。完了後の URL をメモする（例: https://xxxx.vercel.app）
+
+4) MyAISNS プロジェクト直下に .env を作り（なければ）、次を記入:
+   EXPO_PUBLIC_USE_STRIPE_CHECKOUT=1
+   EXPO_PUBLIC_STRIPE_CHECKOUT_API_URL=https://xxxx.vercel.app/api/stripe-checkout
+   EXPO_PUBLIC_STRIPE_VERIFY_API_URL=https://xxxx.vercel.app/api/stripe-verify
+
+5) Expo を再起動（npx expo start）。ショップから Checkout を試す。
+
+■ 備考
+
+- 本番では sk_live_... と本番用 price_xxx を使う。
+- コイン付与をより安全にするなら Stripe Webhook を別途検討。
