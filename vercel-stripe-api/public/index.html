@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MyAISNS Stripe API</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    code { background: #f4f4f5; padding: 0.15rem 0.4rem; border-radius: 4px; }
+    a { color: #635bff; }
+  </style>
+</head>
+<body>
+  <h1>MyAISNS Stripe API</h1>
+  <p>この URL のルートには画面はありません（正常です）。次の API を MyAISNS アプリから呼び出します。</p>
+  <ul>
+    <li><code>POST /api/stripe-checkout</code> — Checkout セッション作成</li>
+    <li><code>GET /api/stripe-verify?session_id=cs_...</code> — 支払い検証</li>
+  </ul>
+  <p>動作確認: ブラウザで <a href="/api/stripe-verify">/api/stripe-verify</a> を開くと <code>invalid session_id</code> の JSON が返ればサーバーは生きています。</p>
+</body>
+</html>
