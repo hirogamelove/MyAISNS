@@ -60,8 +60,9 @@ E) 動作確認
 
   public/index.html がランディングページです。デプロイ後は
   https://（プロジェクト）.vercel.app を Stripe に入力できます。
-  index.html 内の YOUR_EMAIL@example.com を、実際の連絡用メールに
-  置き換えてから push してください。
+  public/tokushoho.html が「特定商取引法に基づく表記」です。
+  Stripe 審査では住所・電話・代表者名を登録情報と一致させる必要があるため、
+  tokushoho.html の【】プレースホルダを必ず実データに置き換えてから push する。
 
 F) さらに安全にする（推奨・別タスク）
   - checkout.session.completed を受ける Webhook を Vercel に追加し、
