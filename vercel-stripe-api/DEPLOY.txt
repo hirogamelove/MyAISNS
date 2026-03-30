@@ -24,3 +24,46 @@ MyAISNS 用 Stripe API（Vercel 専用サブフォルダ）
 
 - 本番では sk_live_... と本番用 price_xxx を使う。
 - コイン付与をより安全にするなら Stripe Webhook を別途検討。
+
+==============================================
+■ 本番（ライブ）に切り替える手順
+==============================================
+
+A) Stripe ダッシュボード
+  1. 画面上部で「本番データ」モードに切り替え（テストから本番へ）。
+  2. 設定 → ビジネス設定で「アカウントを有効化」／本人確認・事業情報を完了する。
+     （未完了だと本番の課金に制限がかかることがあります）
+  3. 商品カタログで、テストと同じ構成の「一回限り」価格（JPY）を本番側でも作成する。
+     → 本番用の price_xxxxxxxx をメモする（テストの ID とは別）。
+
+B) アプリのコード（MyAISNS）
+  1. src/services/stripeService.ts の COIN_PACKS[].priceId を
+     すべて「本番モードで作った price_xxx」に差し替える。
+  2. 金額表示 priceJpy も Stripe の本番価格と一致させる。
+
+C) Vercel（my-aisns など）
+  1. Project → Settings → Environment Variables
+  2. STRIPE_SECRET_KEY を sk_live_.... に変更（本番用シークレットキー）。
+     Production（および Preview にも同じキーを使うか方針を決める）
+  3. Save 後、Deployments → 最新を Redeploy（環境変数反映のため）。
+
+D) アプリのビルド
+  - ローカル .env は本番用に書き換えない運用でもよい（EAS の場合）。
+  - EAS Build なら eas secret で EXPO_PUBLIC_* を本番用 URL のまま設定。
+  - 本番 APK/IPA には「テスト用 sk」を絶対に埋め込まない（クライアントには入れない）。
+
+E) 動作確認
+  - 本番では実カードで課金されるため、最初は最小額の商品で 1 件だけ試すか、
+    Stripe の「テストモード」と「本番モード」を混同しないこと。
+
+■ 公式サイト（Stripe の「ビジネスのウェブサイト」用）
+
+  public/index.html がランディングページです。デプロイ後は
+  https://（プロジェクト）.vercel.app を Stripe に入力できます。
+  index.html 内の YOUR_EMAIL@example.com を、実際の連絡用メールに
+  置き換えてから push してください。
+
+F) さらに安全にする（推奨・別タスク）
+  - checkout.session.completed を受ける Webhook を Vercel に追加し、
+    サーバーだけが「支払い済み」を確定する。
+  - コイン残高を Supabase に持つなら、Webhook 内でユーザにコインを加算する設計が定石。
